@@ -1,0 +1,52 @@
+{
+  "name": "Get Campaign Queue",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/outbound/campaigns/${input.campaignId}",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "queueId": "$.queue.id",
+        "queueName": "$.queue.name"
+      },
+      "translationMapDefaults": {
+        "queueId": "\"\"",
+        "queueName": "\"\""
+      },
+      "successTemplate": "{ \"queueId\": ${queueId}, \"queueName\": ${queueName} }"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "campaignId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "queueId": {
+            "type": "string"
+          },
+          "queueName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}
